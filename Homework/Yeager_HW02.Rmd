@@ -1,0 +1,85 @@
+---
+title: "Biometry_HW02_Yeager"
+output: html_document
+date: "2024-09-04"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Biometry HW02 - Yeager
+
+> **Section 2.1**
+
+1.The probability that a bearing fails during the first month of use is 0.12. What is the probability that it does not fail during the first month?
+
+```{r}
+p.fail <- 0.12
+(p.succ <- 1 - p.fail)
+```
+
+3.  A section of an exam contains four True-False questions. A completed exam paper is selected at random, and the four answers are recorded.\
+
+```{=html}
+<!-- -->
+```
+  + A)  List all 16 outcomes in the sample space.
+
+```{r}
+q.num <- c('Q1','Q2','Q3','Q4')
+outcomes <- expand.grid(lapply(q.num, function(x) c("T","F")))
+colnames(outcomes) <- q.num
+outcomes
+```
+
+  + B)  Assuming the outcomes to be equally likely, find the probability that all the answers are the          same.
+
+```{r}
+pr.3 <- 1/16 # probability for any one outcome
+
+pr.all.T <- pr.3 # probability all are TRUE
+pr.all.F <- pr.3 # probability all are FALSE
+
+# Answers can only be TRUE or FALSE, thus only two of 16 outcomes can have same answers
+(pr.same <- pr.all.T + pr.all.F) 
+```
+
+  + C)  Assuming the outcomes to be equally likely, find the probability that exactly one of the four          answers is “True.”
+
+```{r}
+q1.T <- 1/16 # each of 16 outcomes equally likely
+q2.T <- 1/16
+q3.T <- 1/16
+q4.T <- 1/16
+pr.one.T <- q1.T + q2.T + q3.T + q4.T # total of 4 outcomes where only 1 is "TRUE"
+pr.one.T
+```
+
+  + D)  Assuming the outcomes to be equally likely, find the probability that at most one of the four          answers is “True.”
+
+```{r}
+# There are 5 equally probable outcomes with "TRUE" as the answer for 1 or fewer questions
+pr.3 <- 1/16 # probability for any one outcome
+pr.max1.T <- pr.3 + pr.3 + pr.3 + pr.3 + pr.3
+pr.max1.T
+```
+
+5.  Four candidates are to be interviewed for a job. Two of them, numbered 1 and 2, are qualified, and the other two, numbered 3 and 4, are not. The candidates are interviewed at random, and the first qualified candidate interviewed will be hired. The outcomes are the sequences of candidates that are interviewed. So one outcome is 2, and another is 431.
+
+  + A)  List all the possible outcomes.
+```{r}
+qual <- c(1, 2)
+un.qual <- c(3, 4)
+
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
