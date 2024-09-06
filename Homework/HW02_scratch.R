@@ -61,3 +61,10 @@ E <- all.perms %>% filter(first == 4 | second == 4) %>% filter(!first %in% c(1,2
 room <- c('bed','liv','den','bas','kit','bat')
 tv <- c(0.37,0.26,0.22,0.12,0.02,0.01)
 d <- tibble(room, tv)
+
+## Section 2.2 q1
+bases <- c('A','G','C','T')
+codons <- permutations(n = length(bases), r = 3, 
+                       v = bases, repeats.allowed = TRUE)
+codons
+

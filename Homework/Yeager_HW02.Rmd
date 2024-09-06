@@ -17,7 +17,7 @@ library(gtools)
 
 ## Biometry HW02 - Yeager
 
-> **Section 2.1**
+### Section 2.1
 
 1.  The probability that a bearing fails during the first month of use
     is 0.12. What is the probability that it does not fail during the
@@ -33,19 +33,21 @@ p.succ
     exam paper is selected at random, and the four answers are
     recorded.\
 
-A. List all 16 outcomes in the sample space.
+    A. List all 16 outcomes in the sample space.
 
-```{r s2.1 q2.a}}
+```{r s2.1 q3.a}}
 q.num <- c('Q1','Q2','Q3','Q4')
 outcomes <- expand.grid(lapply(q.num, function(x) c("T","F")))
 colnames(outcomes) <- q.num
 outcomes
 ```
 
+```         
 B. Assuming the outcomes to be equally likely, find the probability that
 all the answers are the same.
+```
 
-```{r s2.1 q2.b}
+```{r s2.1 q3.b}
 pr.3 <- 1/16 # probability for any one outcome
 
 pr.all.T <- pr.3 # probability all are TRUE
@@ -55,10 +57,12 @@ pr.all.F <- pr.3 # probability all are FALSE
 (pr.same <- pr.all.T + pr.all.F) 
 ```
 
+```         
 C. Assuming the outcomes to be equally likely, find the probability that
 exactly one of the four answers is “True.”
+```
 
-```{r s2.1 q2.c}
+```{r s2.1 q3.c}
 q1.T <- 1/16 # each of 16 outcomes equally likely
 q2.T <- 1/16
 q3.T <- 1/16
@@ -67,10 +71,12 @@ pr.one.T <- q1.T + q2.T + q3.T + q4.T # total of 4 outcomes where only 1 is "TRU
 pr.one.T
 ```
 
+```         
 D. Assuming the outcomes to be equally likely, find the probability that
 at most one of the four answers is “True.”
+```
 
-```{r s2.1 q2.d}
+```{r s2.1 q3.d}
 # There are 5 equally probable outcomes with "TRUE" as the answer for 1 or fewer questions
 pr.3 <- 1/16 # probability for any one outcome
 pr.max1.T <- pr.3 + pr.3 + pr.3 + pr.3 + pr.3
@@ -84,7 +90,9 @@ pr.max1.T
     sequences of candidates that are interviewed. So one outcome is 2,
     and another is 431.
 
+```         
 A. List all the possible outcomes.
+```
 
 ```{r s2.1 q5.a}
 library(gtools)
@@ -96,8 +104,9 @@ all.perms$sequence <- paste0("Seq.", 1:24)
 all.perms
 ```
 
-B. Let A be the event that only one candidate is interviewed. List the
-outcomes in "A".
+```         
+B. Let A be the event that only one candidate is interviewed. List the outcomes in "A".
+```
 
 ```{r s2.1 q5.b}
 A <- all.perms %>% filter(first %in% c(1,2))
@@ -106,8 +115,9 @@ A
 # Interviews stop after candidate 1 or 2, and only one interview is conducted, so although other sequences exist there are only two outcomes; either candidate 1 or candidate 2 are interviewed first.
 ```
 
-C. Let B be the event that three candidates are interviewed. List the
-outcomes in B.
+```         
+C. Let B be the event that three candidates are interviewed. List the outcomes in B.
+```
 
 ```{r s2.1 q5.c}
 B <- all.perms %>% filter(!first %in% c(1,2)) %>% filter(!second %in% c(1,2))
@@ -116,8 +126,9 @@ B
 # for three candidates to be interviewed, candidates 1 & 2 must be interviewed third or fourth
 ```
 
-D. Let C be the event that candidate 3 is interviewed. List the outcomes
-in C.
+```         
+D. Let C be the event that candidate 3 is interviewed. List the outcomes in C.
+```
 
 ```{r s2.1 q5.d}
 C <- all.perms %>% filter(first %in% c(3,4)) %>% 
@@ -127,8 +138,9 @@ C
 # Outcomes where Candidate 3 are interviewed do not have Candidates 1 or 2 preceed them.
 ```
 
-E. Let D be the event that candidate 2 is not interviewed. List the
-outcomes in D.
+```         
+E. Let D be the event that candidate 2 is not interviewed. List the outcomes in D.
+```
 
 ```{r s2.1 q5.e}
 D1 <- all.perms %>% filter(first == 1)
@@ -139,8 +151,9 @@ D
 # Outcomes where candidate 1 is interviewed before candidate 2 result in the event that candidate 2 is not interviewed.
 ```
 
-F. Let E be the event that candidate 4 is interviewed. Are A and E
-mutually exclusive? Howabout B and E, C and E, D and E?
+```         
+F. Let E be the event that candidate 4 is interviewed. Are A and E mutually exclusive? Howabout B and E, C and E, D and E?
+```
 
 ```{r s2.1 q5.f}
 E <- all.perms %>% filter(first == 4 | second == 4) %>% filter(!first %in% c(1,2))
@@ -157,9 +170,243 @@ d <- tibble(room, tv)
 d
 ```
 
-A. What is the probability that a TV set is located in a living room or
-den?
+```         
+A. What is the probability that a TV set is located in a living room or den?
+```
 
 ```{r s2.1 q7.a}
+pr.liv <- 0.26
+pr.den <- 0.22
+pr.either <- pr.liv + pr.den
+pr.either
 
+# The event is not mutually exclusive, thus the probability of a TV being in either the living room or the den is equal to the sum of the probabilities
+```
+
+```         
+B. What is the probability that a TV set is not located in a bedroom?
+```
+
+```{r s2.1 q7.b}
+pr.bed <- 0.37
+pr.not.bed <- 1 - pr.bed
+pr.not.bed
+```
+
+9.  Among the cast aluminum parts manufactured on a certain day, 80%
+    were flawless, 15% had only minor flaws, and 5% had major flaws.
+    Find the probability that a randomly chosen part:
+
+```{r s2.1 q9}
+flawless <- 0.80
+minor <- 0.15
+major <- 0.05
+```
+
+```         
+A. has a flaw (major or minor).
+```
+
+```{r s2.1 q9.a}
+pr.flawed <- major + minor
+pr.flawed
+```
+
+```         
+B. has no major flaw.
+```
+
+```{r s2.1 q9.b}
+pr.no.major <- 1 - major
+pr.no.major
+```
+
+11. A quality-control engineer samples 100 items manufactured by a
+    certain process, and finds that 15 of them are defective. True or
+    false:
+
+```         
+A. The probability that an item produced by this process is
+   defective is 0.15.
+```
+
+***FALSE***
+
+```         
+B. The probability that an item produced by this process is 
+   defective is likely to be close to 0.15, 
+   but not exactly equal to 0.15.
+```
+
+***TRUE***
+
+13. Let S be the event that a randomly selected college student has
+    taken a statistics course, and let C be the event that the same
+    student has taken a chemistry course. Suppose P(S) = 0.4, P(C) =
+    0.3, and P(S ∩ C) = 0.2.
+
+```{r s2.1 q13}
+P.S <- 0.4
+P.C <- 0.3
+P.intersect <- 0.2
+```
+
+```         
+A. Find the probability that a student has taken statistics, chemistry,
+or both.
+```
+
+```{r s2.1 q13.a}
+P.SUC <- P.S + P.C - P.intersect
+P.SUC
+```
+
+```         
+B. Find the probability that a student has taken neither statistics nor
+chemistry.
+```
+
+```{r s2.1 q13.b}
+P.neither <- 1 - P.SUC
+P.neither
+```
+
+```         
+C. Find the probability that a student has taken statistics but not
+chemistry.
+```
+
+```{r s2.1 q13.c}
+P.SnC <- P.S + P.C - P.SUC
+P.SnC
+```
+
+15. All the fourth-graders in a certain elementary school took a
+    standardized test. A total of 85% of the students were found to be
+    proficient in reading,78% were found to be proficient in
+    mathematics, and 65% were found to be proficient in both reading and
+    mathematics. A student is chosen at random.
+
+```{r s2.1 q15}
+reading <- 0.85
+math <- 0.78
+both <- 0.65
+```
+
+```         
+A. What is the probability that the student is proficient
+   in mathematics but not in reading?
+```
+
+```{r s2.1 q15.a}
+P.RCnM <- math - both
+P.RCnM
+```
+
+```         
+B. What is the probability that the student is proficient
+   in reading but not in mathematics?
+```
+
+```{r s2.1 q15.b}
+P.RnMC <- reading - both
+P.RnMC
+```
+
+```         
+C. What is the probability that the student is proficient
+   in neither reading nor mathematics?
+```
+
+```{r s2.1 q15.c}
+P.RUM <- reading + math - both
+P.RCUMC <- 1 - P.RUM
+P.RCUMC
+```
+
+17. A system contains two components, A and B. The system will function
+    only if both components function. The probability that A functions
+    is 0.98, the probability that B functions is 0.95, and the
+    probability that either A or B functions is 0.99. What is the
+    probability that the system functions?
+
+```{r s2.1 q17}
+P.A <- 0.98
+P.B <- 0.95
+P.AUB <- 0.99
+P.AnB <- P.A + P.B - P.AUB
+P.AnB
+```
+
+19. True or false: If A and B are mutually exclusive,
+
+```         
+A. P(A ∪ B) = 0
+```
+
+*FALSE*
+
+```         
+B. P(A ∩ B) = 0
+```
+
+*TRUE*
+
+```         
+C. P(A ∪ B) = P(A ∩ B)
+```
+
+*FALSE*
+
+```         
+D. P(A ∪ B) = P(A) + P(B)
+```
+
+*TRUE*
+
+### Section 2.2
+
+1.  DNA molecules consist of chemically linked sequences of the bases
+    adenine, guanine, cytosine, and thymine, denoted A, G, C, and T. A
+    sequence of three bases is called a codon. A base may appear more
+    than once in a codon.
+
+```         
+A. How many different codons are there?
+```
+```{r s2.2 q1.a1}
+# to simply get number of codons:
+num.codons <- 4 * 4 * 4
+num.codons
+```
+
+```{r s2.2 q1.a2}
+# to see all codons 
+bases <- c('A','G','C','T')
+codons <- permutations(n = length(bases), r = 3, 
+                       v = bases, repeats.allowed = TRUE)
+codons <- codons %>% as_tibble()
+head(codons)
+```
+```         
+B. The bases A and G are purines, while C and T are
+   pyrimidines. How many codons are there whose
+   first and third bases are purines and whose second
+   base is a pyrimidine?
+```
+```{r s2.2 q1.b}
+q1.b <- 2 * 2 * 2
+q1.b
+```
+```{r s2.2 q1.b2}
+# to list out codon sequences:
+q1.b2 <- codons %>% filter(V1 %in% c('A','G') & V3 %in% c('A','G')) %>% 
+  filter(V2 %in% c('C','T'))
+q1.b2
+```
+```
+C. How many codons consist of three different bases?
+```
+```{r s2.2 q1.c}
+q1.c <- 
 ```
