@@ -49,3 +49,15 @@ B
 #d
 C <- all.perms %>% filter(first %in% c(3,4)) %>% filter(!(first == 4 & second != 3))
 C
+#e
+D1 <- all.perms %>% filter(first == 1)
+D2 <- all.perms %>% filter(second == 1 & first != 2)
+D3 <- all.perms %>% filter(third == 1 & first != 2 & second != 2)
+D <- rbind(D1,D2,D3)
+#f
+E <- all.perms %>% filter(first == 4 | second == 4) %>% filter(!first %in% c(1,2))
+
+## Section 2.1 Q7
+room <- c('bed','liv','den','bas','kit','bat')
+tv <- c(0.37,0.26,0.22,0.12,0.02,0.01)
+d <- tibble(room, tv)
