@@ -31,7 +31,7 @@ knitr::opts_chunk$set(echo = TRUE)
     (sigma.Y <- (4 * p) * (1 - p)) # or 2^2 * sigma.X^2
     ```
 
-3.  When a certain glaze is applied to a ceramic surface, the probability is 5% that there will be discoloration, 20% that there will be a crack, and 23% that there will be either discoloration or a crack, or both. Let X = 1 if there is discoloration, and let X = 0 otherwise. Let Y = 1 if there is a crack, and let Y = 0 otherwise.
+2.  When a certain glaze is applied to a ceramic surface, the probability is 5% that there will be discoloration, 20% that there will be a crack, and 23% that there will be either discoloration or a crack, or both. Let X = 1 if there is discoloration, and let X = 0 otherwise. Let Y = 1 if there is a crack, and let Y = 0 otherwise.
 
 ```{r s4.1.3}
 p.disc <- 0.05
@@ -51,9 +51,11 @@ p.either <- 0.23
 #(f)
 # No, because Z must equal 1 where X + Y = 2
 ```
+
 ## Section 4.2
 
-Q1. Let X ~ Bin(7, 0.3) Find:
+Q1. Let X \~ Bin(7, 0.3) Find:
+
 ```{r s4.2.1}
 # define necessary variables first
 n <- 7
@@ -100,5 +102,306 @@ xb.1 <- 0
 xb.2 <- 1
 xb.3 <- 2
 
-b <- (factorial(n))/(factorial(xb.1) * factorial(n - xb.1)) * p^xb.1 * (1 - p)
+b <- (factorial(n))/(factorial(xb.1) * factorial(n-xb.1)) * p^xb.1 * (1-p)^(n-xb.1) + (factorial(n)) / (factorial(xb.2) * factorial(n - xb.2)) * p^xb.2 * (1-p)^(n-xb.2) + (factorial(n)) / (factorial(xb.3) * factorial(n-xb.3)) * p^xb.3 * (1 - p)^(n - xb.3)
+b
+
+c <- (factorial(n)) / (factorial(xb.1) * factorial(n - xb.1)) * p^xb.1 * (1 - p)^(n - xb.1)
+c
+```
+
+Q7. Of all the weld failures in a certain assembly, 85% of them occur in the weld metal itself, and the remaining 15% occur in the base metal. A sample of 20 weld failures is examined.
+
+```{r s4.2.7}
+# a) What is the probability that exactly five of them are base metal failures?
+n <- 20
+p <- 0.15
+x.a <- 5
+
+a <- (factorial(n)) / (factorial(x.a) * factorial(n - x.a)) * p^x.a * (1 - p)^(n - x.a)
+a
+
+# b) What is the probability that fewer than four of them are base metal failures?
+xb.1 <- 3
+xb.2 <- 2
+xb.3 <- 1
+xb.4 <- 0
+b <- (factorial(n)) / (factorial(xb.1) * factorial(n - xb.1)) * p^xb.1 * (1 - p) ^ (n - xb.1) + (factorial(n)) / (factorial(xb.2) * factorial(n-xb.2)) * p^xb.2 * (1 - p)^(n - xb.2) + (factorial(n)) / (factorial(xb.3) * factorial(n - xb.3)) * p^xb.3 * (1 - p)^(n - xb.3) + (factorial(n)) / (factorial(xb.4) * factorial(n - xb.4)) * p^xb.4 * (1 - p)^(n - xb.4)
+b
+
+# c) What is the probability that none of them are base metal failures?
+c <- (factorial(n)) /(factorial(xb.4) * factorial(n - xb.4)) * p^xb.4 * (1 - p)^(n - xb.4)
+c
+
+# d) Find the mean number of base metal failures.
+mu <- n * p
+mu
+
+# e) Find the standard deviation of the number of base metal failures.
+sig <- sqrt(n * p * (1 - p))
+sig
+```
+
+## Section 4.3
+
+1.  Let x \~ Poisson(4). Find:
+
+```{r s4.3.1}
+# a) P(X = 1)
+lamb <- 4
+x1 <- 1
+x0 <- 0
+
+a <- exp(-lamb) * ((lamb^x1) / factorial(x1))
+a
+
+# b) P(X = 0)
+b <- exp(-lamb) * ((lamb^x0) / factorial(x0))
+b
+# c) P(X < 2)
+c <- a + b
+c
+
+# d) P(X > 1)
+d <- -1 - a - b
+d
+
+# e) mu X
+# 4, same as lambda here
+
+# f) sigma X
+f <- sqrt(lamb)
+f
+```
+
+3.  In a certain city, the number of potholes on a major street follows a Poisson distribution with a rate of 3 per mile. Let X represent the number of potholes in a two-mile stretch of road. Find:
+
+```{r s4.3.3}
+# a) P(X = 4)
+lamb <- 6
+x4 <- 4
+
+a <- -exp(-lamb) * ((lamb^x4) / factorial(x4))
+a
+
+# b) P(X ≤ 1)
+x0 <- 0
+x1 <- 1
+b <- exp(-lamb) * ((lamb^x0) / factorial(x0)) + exp(-lamb)*((lamb^x1) / factorial(x1))
+b
+
+# c) P(5 ≤ X < 8)
+x5 <- 5
+x6 <- 6
+x7 <- 7
+c <- exp(-lamb) * ((lamb^x5) / factorial(x5)) + exp(-lamb) * ((lamb^x6) / factorial(x6)) + exp(-lamb) * ((lamb^x7) / factorial(x7))
+c
+
+# d) μX
+#same as lambda
+
+# e) σX
+e <- sqrt(lamb)
+e
+```
+
+5.  A data center contains 1000 computer servers. Each server has probability 0.003 of failing on a given day.
+
+```{r s4.3.5}
+# a) What is the probability that exactly two servers fail?
+n <- 1000
+p <- 0.003
+lamb <- n * p
+x2 <- 2
+
+a <- exp(-lamb) * ((lamb^x2) / factorial(x2))
+a
+
+# b) What is the probability that fewer than 998 servers function?
+x1 <- 1
+x0 <- 0
+b <- 1 - exp(-lamb) * ((lamb^x0) / factorial(x0)) - exp(-lamb) * ((lamb^x1) / factorial(x1)) - exp(-lamb) * ((lamb^x2) / factorial(x2))
+b
+
+# c) What is the mean number of servers that fail?
+lamb
+
+# d) What is the standard deviation of the number of servers that fail?
+d <- sqrt(lamb)
+d
+```
+
+## Section 4.5
+
+1.  Find the area under the normal curve
+
+-   Use z-score table
+
+```{r s4.5.1}
+# a) To the right of z = −0.85.
+(a451 <- 1 - 0.1977)
+
+# b) Between z = 0.40 and z = 1.30.
+(b451 <- 0.9032 - 0.6554)
+
+# c) Between z = −0.30 and z = 0.90.
+(c451 <- 0.8159 - 0.3821)
+
+# d) Outside z = −1.50 to z = −0.45.
+(d451 <- 0.0668 + (1 - 0.3264))
+```
+
+3.  Let Z ∼ N(0, 1). Find a constant c for which
+
+```{r s4.5.3}
+# a) P(Z ≥ c) = 0.1587 
+(c.a <- 1)
+# b) P(c ≤ Z ≤ 0) = 0.4772
+(c.b <- -2)
+# c) P(−c ≤ Z ≤ c) = 0.8664
+(c.c <- 1.5)
+# d) P(0 ≤ Z ≤ c) = 0.2967
+(c.d <- 0.83)
+# e) P(|Z| ≥ c) = 0.1470
+(c.e <- 1.45)
+```
+
+5.  The lifetime of a battery in a certain application is normally distributed with mean μ = 16 hours and standard deviation σ = 2 hours.
+
+```{r s4.5.5}
+# a) What is the probability that a battery will last more than 19 hours?
+mu <- 16
+sig <- 2
+(z <- (19 - mu) / sig)
+a <- 0.0668 # use z-score table 
+
+# b) Find the 10th percentile of the lifetimes.
+# z-score for 0.10 ~ -1.28
+(perc.10 <- mu + (-1.28) * sig)
+
+# c) A particular battery lasts 14.5 hours. What percentile is its lifetime on?
+x = 14.5
+(z = (x - mu) / sig)
+# using z-score table, area under curve 0 .2266, roughly 22.7th perc.
+
+# d) What is the probability that the lifetime of a battery is between 14.5 and 17 hours?
+d1 <- 14.5
+d2 <- 17
+(z1 <- (d1 - mu) / sig)
+(z2 <- (d2 - mu) / sig)
+(d <- 0.6915 - 0.2266) # using z-score table, 0.2266 and 0.6915
+```
+
+7.  Scores on a standardized test are approximately normally distributed with a mean of 480 and a standard deviation of 90.
+
+```{r s4.5.7}
+# a) What proportion of the scores are above 700?
+mu <- 480
+sd <- 90
+x.a <- 700
+(z.a <- (x.a - mu) / sd)
+(a <- 1 - 0.9927)
+
+# b) What is the 25th percentile of the scores?
+# z = -0.67 for 25th percentile
+z.b <- -0.67
+(b <- z.b * sd + mu)
+
+# c) If someone’s score is 600, what percentile is she on?
+x.c <- 600
+(z.c <- (x.c - mu) / sd)
+# z of ~1.34 is 90.8th (91st) percentile
+
+# d) What proportion of the scores are between 420 and 520?
+(z.d1 <- (420 - mu) / sd)
+(z.d2 <- (520 - mu) / sd)
+(d <- 0.67 - 0.2514)
+```
+
+11. Penicillin is produced by the Penicillium fungus, which is grown in a broth whose sugar content must be carefully controlled. The optimum sugar concentration is 4.9 mg/mL. If the concentration exceeds 6.0 mg/mL, the fungus dies and the process must be shut down for the day.
+
+```{r s4.5.11}
+# a) If sugar concentration in batches of broth is normally distributed with mean 4.9 mg/mL and standard deviation 0.6 mg/mL, on what proportion of days will the process shut down?
+mu <- 4.9
+sd <- 0.6
+x.a <- 6
+(z.a <- (x.a - mu) / sd)
+(a <- 1 - 0.9664)
+(perc.days <- a * 100)
+
+# b) The supplier offers to sell broth with a sugar content that is normally distributed with mean 5.2 mg/mL and standard deviation 0.4 mg/mL. Will this broth result in fewer days of production lost? Explain.
+mu <- 5.2
+sd <- 0.4
+(z.b <- (x.a - mu) / sd)
+(b <- 1 - 0.9772)
+(perc.days.b <- b * 100)
+# yes because although the broth has a higher mean sugar content, the lower sd results in smaller amount of the distribution to lie beyond 6.0mg/L
+```
+
+15. The fill volume of cans filled by a certain machine is normally distributed with mean 12.05 oz and standard deviation 0.03 oz.
+
+```{r s4.5.15}
+# a) What proportion of cans contain less than 12 oz?
+mu.a <- 12.05
+sd.a <- 0.03
+x.a <- 12
+(z.a <- (x.a - mu.a) / sd.a)
+# z-score of ~ -1.67 indicates 0.0475
+
+# b) The process mean can be adjusted through calibration. To what value should the mean be set so that 99% of the cans will contain 12 oz or more?
+# using z-score of 0.01
+z.b <- -2.33
+(mu.b <- -(z.b * sd.a) + x.a)
+
+# c) If the process mean remains at 12.05 oz, what must the standard deviation be so that 99% of the cans will contain 12 oz or more?
+(sd.c <- (x - mu.a) / z.b)
+```
+
+21. Two resistors, with resistances R1 and R2, are connected in series. R1 is normally distributed with mean 100 and standard deviation 5 , and R2 is normally distributed with mean 120 and standard deviation 10.
+
+```{r s4.5.21}
+# a) What is the probability that R2 > R1?
+# P(R2 - R1 > 0)
+x.a <- 0
+(z.a <- (x.a - 20) / sqrt(25 + 100))
+# z.a = -1.79, so 0.0367
+(a <- 1 - 0.0367)
+
+# b) What is the probability that R2 exceeds R1 by more than 30?
+# P(R2 - R1 > 30)
+x.b <- 30
+(z.b <- (x.b - 20) / sqrt(25 + 100))
+# z.b = 0.894, so 0.8133
+(b <- 1 - 0.8133)
+```
+
+## Section 4.9
+
+1.  Choose the best answer to fill in the blank. If an estimator is unbiased, then
+    i.  the estimator is equal to the true value.
+    ii. the estimator is usually close to the true value.
+    iii. ***the mean of the estimator is equal to the true value.***
+    iv. the mean of the estimator is usually close to the true value.
+
+## Section 4.10
+
+1.  Each of three samples has been plotted on a normal probability plot. For each, say whether the sample appears to have come from an approximately normal population.
+
+<!-- -->
+
+a)  Points associated with smaller values lack smooth continuity with rest of points in the sample, and tail "falls off" suddenly suggesting leptokurtosis, but is very close to a normal distribution in appearance
+b)  Not normal. Platykurtic perhaps
+c)  Normal
+
+<!-- -->
+
+3.  Below are the durations (in minutes) of 40 eruptions of the geyser Old Faithful in Yellowstone National Park. 4.1 1.8 3.2 1.9 4.6 2.0 4.5 3.9 4.3 2.3 3.8 1.9 4.6 1.8 4.7 1.8 4.6 1.9 3.5 4.0 3.7 3.7 4.3 3.6 3.8 3.8 3.8 2.5 4.5 4.1 3.7 3.8 3.4 4.0 2.3 4.4 4.1 4.3 3.3 2.0 Construct a normal probability plot for these data. Do the data appear to come from an approximately normal distribution?
+
+```{r s4.10.3}
+d <- c(4.1, 1.8, 3.2, 1.9, 4.6, 2.0, 4.5, 3.9, 4.3, 2.3, 3.8, 1.9, 4.6, 1.8, 
+       4.7, 1.8, 4.6, 1.9, 3.5, 4.0, 3.7, 3.7, 4.3, 3.6, 3.8, 3.8, 3.8, 2.5, 
+       4.5, 4.1, 3.7, 3.8, 3.4, 4.0, 2.3, 4.4, 4.1, 4.3, 3.3, 2.0)
+qqnorm(d); qqline(d, col = 'red')
+# mean and surrounding values reside above line with slope of 1, and 
+# both tails stray from line, thus I do not believe these data come from 
+# a normal distribution
 ```
