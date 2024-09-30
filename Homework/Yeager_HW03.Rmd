@@ -1,0 +1,104 @@
+---
+title: "Biometry HW03"
+author: "Joel Yeager"
+date: "2024-09-22"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Section 4.1
+
+1.  After scoring a touchdown, a football team may elect to attempt a two-point conversion, by running or passing the ball into the end zone. If successful, the team scores two points. For a certain football team, the probability that this play is successful is 0.40.
+
+    -   A:
+
+    ```{r s4.1.1a}
+    # Let X = 1 if successful, X = 0 if not. Find the mean and variance of X.
+    p <- 0.4
+    (mu.X <- p) # mean of X is the same as Pr(Success)
+    (sigma.X <- p * (1 - p))
+    ```
+
+    -   B: no because the possible values for Y are not 0 and 1
+
+    -   C:
+
+    ```{r s4.1.1c}
+    (mu.Y <- 2 * p) # because is 2 bernoulli's
+    (sigma.Y <- (4 * p) * (1 - p)) # or 2^2 * sigma.X^2
+    ```
+
+3.  When a certain glaze is applied to a ceramic surface, the probability is 5% that there will be discoloration, 20% that there will be a crack, and 23% that there will be either discoloration or a crack, or both. Let X = 1 if there is discoloration, and let X = 0 otherwise. Let Y = 1 if there is a crack, and let Y = 0 otherwise.
+
+```{r s4.1.3}
+p.disc <- 0.05
+p.crack <- 0.2
+p.either <- 0.23
+
+#(a)
+(px <- p.disc) # px is same as probability for discoloration
+#(b)
+(py <- p.crack) # py here is same as crack probability
+#(c)
+(pz <- p.either) # pz is same as probability either defect being present
+#(d)
+# Yes, the defects are not mutually exclusive.
+#(e)
+# No because pz can be zero while px + py cannot.
+#(f)
+# No, because Z must equal 1 where X + Y = 2
+```
+## Section 4.2
+
+Q1. Let X ~ Bin(7, 0.3) Find:
+```{r s4.2.1}
+# define necessary variables first
+n <- 7
+p <- 0.3
+
+# a) P(X = 1)
+X.a <- 1
+(a <- (factorial(n))/(factorial(X.a)*factorial(n - X.a))*p^X.a*(1 - p)^(n-X.a))
+
+# b) P(X = 2)
+X.b <- 2
+(b <- (factorial(n))/(factorial(X.b)*factorial(n - X.b))*p^X.b*(1 - p)^(n-X.b))
+
+# c) P(X < 1)
+X.c <- 0
+(c <- (factorial(n))/(factorial(X.c)*factorial(n - X.c))*p^X.c*(1 - p)^(n-X.c))
+
+# d) P(X > 4)
+X.d1 <- 5
+X.d2 <- 6
+X.d3 <- 7
+
+(d <- (factorial(n))/(factorial(X.d1) * factorial(n-X.d1))*p^X.d1*(1 - p)^(n - X.d1) + (factorial(n))/(factorial(X.d2) * factorial(n - X.d2))*p^X.d2*(1 - p)^(n - X.d2) + (factorial(n))/(factorial(X.d3)*factorial(n - X.d3))*p^X.d3*(1 - p)^(n - X.d3))
+
+# e) mu X
+(mu <- n * p)
+
+# f) sigma^2
+(sig.sq <- n * p * (1 - p))
+```
+
+Q5. Of all the registered automobiles in a certain state, 10% violate the state emissions standard. Twelve automobiles are selected at random to undergo an emissions test.
+
+```{r s4.2.5}
+# a) Find the probability that exactly three of them violate the standard.
+n <- 12
+p <- 0.1
+
+X.a <- 3 # the three that "violate the standard"
+(a <- (factorial(n))/(factorial(X.a) * factorial(n - X.a)) * p^X.a * (1 - p)^(n - X.a))
+
+# b) Find the probability that fewer than three of them violate the standard.
+xb.1 <- 0
+xb.2 <- 1
+xb.3 <- 2
+
+b <- (factorial(n))/(factorial(xb.1) * factorial(n - xb.1)) * p^xb.1 * (1 - p)
+```
