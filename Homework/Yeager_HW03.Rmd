@@ -183,23 +183,23 @@ x4 <- 4
 a <- -exp(-lamb) * ((lamb^x4) / factorial(x4))
 a
 
-# b) P(X ≤ 1)
+# b) P(X =< 1)
 x0 <- 0
 x1 <- 1
 b <- exp(-lamb) * ((lamb^x0) / factorial(x0)) + exp(-lamb)*((lamb^x1) / factorial(x1))
 b
 
-# c) P(5 ≤ X < 8)
+# c) P(5 =< X < 8)
 x5 <- 5
 x6 <- 6
 x7 <- 7
 c <- exp(-lamb) * ((lamb^x5) / factorial(x5)) + exp(-lamb) * ((lamb^x6) / factorial(x6)) + exp(-lamb) * ((lamb^x7) / factorial(x7))
 c
 
-# d) μX
+# d) muX
 #same as lambda
 
-# e) σX
+# e) sigmaX
 e <- sqrt(lamb)
 e
 ```
@@ -237,35 +237,35 @@ d
 -   Use z-score table
 
 ```{r s4.5.1}
-# a) To the right of z = −0.85.
+# a) To the right of z = - 0.85.
 (a451 <- 1 - 0.1977)
 
 # b) Between z = 0.40 and z = 1.30.
 (b451 <- 0.9032 - 0.6554)
 
-# c) Between z = −0.30 and z = 0.90.
+# c) Between z = - 0.30 and z = 0.90.
 (c451 <- 0.8159 - 0.3821)
 
-# d) Outside z = −1.50 to z = −0.45.
+# d) Outside z = - 1.50 to z = - 0.45.
 (d451 <- 0.0668 + (1 - 0.3264))
 ```
 
-3.  Let Z ∼ N(0, 1). Find a constant c for which
+3.  Let Z ~ N(0, 1). Find a constant c for which
 
 ```{r s4.5.3}
-# a) P(Z ≥ c) = 0.1587 
+# a) P(Z >= c) = 0.1587 
 (c.a <- 1)
-# b) P(c ≤ Z ≤ 0) = 0.4772
+# b) P(c =< Z =< 0) = 0.4772
 (c.b <- -2)
-# c) P(−c ≤ Z ≤ c) = 0.8664
+# c) P(-c =< Z =< c) = 0.8664
 (c.c <- 1.5)
-# d) P(0 ≤ Z ≤ c) = 0.2967
+# d) P(0 =< Z =< c) = 0.2967
 (c.d <- 0.83)
-# e) P(|Z| ≥ c) = 0.1470
+# e) P(|Z| >= c) = 0.1470
 (c.e <- 1.45)
 ```
 
-5.  The lifetime of a battery in a certain application is normally distributed with mean μ = 16 hours and standard deviation σ = 2 hours.
+5.  The lifetime of a battery in a certain application is normally distributed with mean mu = 16 hours and standard deviation sigma = 2 hours.
 
 ```{r s4.5.5}
 # a) What is the probability that a battery will last more than 19 hours?

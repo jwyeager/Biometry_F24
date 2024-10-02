@@ -1,0 +1,258 @@
+---
+title: "HW04_Yeager"
+output: pdf_document
+date: "2024-10-01"
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r packages, include=FALSE}
+library(tidyverse)
+library(magrittr)
+```
+
+## Section 5.1
+
+1.  Find the value of z(alpha/2) to use in expression (5.1) to construct
+    a confidence interval with level:
+
+```{r 5.1.1}
+## a) 95%
+# using z-score table, 1.96
+
+## b) 98%
+# using z-score table, 2.33
+
+## c) 99%
+# using z-score table, 2.58
+
+## d) 80%
+# using z-score table, 1.28 (or 1.29)
+```
+
+3.  As the confidence level goes up, the reliability goes \_\_\_\_\_\_\_
+    and the precision goes \_\_\_\_\_\_\_.
+
+    -   First blank: up; second blank: down.
+
+4.  In a sample of 100 steel wires the average breaking strength is 50
+    kN, with a standard deviation of 2 kN.
+
+```{r 5.1.5}
+## a) Find a 95% confidence interval for the mean 
+##    breaking strength of this type of wire.
+n <- 100
+x.bar <- 50
+sd <- 2
+
+(a1 <- x.bar + (1.96 * (2 / sqrt(n))))
+(a2 <- x.bar - (1.96 * (2 / sqrt(n))))
+# 95% CI: 49.608 to 50.392
+
+## b) Find a 99% confidence interval for the mean
+##    breaking strength of this type of wire.
+(b1 <- x.bar + (2.58 * (sd / sqrt(n))))
+(b2 <- x.bar - (2.58 * (sd / sqrt(n))))
+# 99% CI: 49.484 to 50.516
+
+## c) An engineer claims that the mean breaking
+##    strength is between 49.7 kN and 50.3 kN. With
+##    what level of confidence can this statement be
+##    made?
+(z <- (50.3 - 50) / (2 / sqrt(n)))
+(alp.2 <- 1 - 0.9332)
+(conf <- (1 - (2 * alp.2)) * 100)
+
+## d) How many wires must be sampled so that a 95%
+#     confidence interval specifies the mean breaking
+#     strength to within +/- 0.3 kN?
+z.025 <- 1.96
+(two.sqrt.n <- (0.3 / z.025))
+(n <- (2 / two.sqrt.n)^2)
+# n = 171
+
+## e) How many wires must be sampled so that a 99%
+#     confidence interval specifies the mean breaking
+#     strength to within +/- 0.3 kN?
+z.005 <- 2.58
+(two.sqrt.n <- (0.3 / z.005))
+(n <- (2 / two.sqrt.n)^2)
+# n = 296
+```
+
+7.  The capacities (in ampere-hours) were measured for a sample of 120
+    batteries. The average was 178 and the standard deviation was 14.
+
+```{r 5.1.7}
+## a) Find a 95% confidence interval for the mean capacity
+#     of batteries produced by this method.
+n <- 120
+x.bar <- 178
+sd <- 14
+
+(a1 <- x.bar + (1.96 * (sd / sqrt(n))))
+(a2 <- x.bar - (1.96 * (sd / sqrt(n))))
+# 95% CI: 175.4951 to 180.5049
+
+## b) Find a 99% confidence interval for the mean capacity
+#     of batteries produced by this method.
+(b1 <- x.bar + (2.58 * (sd / sqrt(n))))
+(b2 <- x.bar - (2.58 * (sd / sqrt(n))))
+# 99% CI: 174.7027 to 181.2973
+
+## c) An engineer claims that the mean capacity is
+#     between 176 and 180 ampere-hours. With what
+#     level of confidence can this statement be made?
+(z <- (180 - x.bar) / (sd / sqrt(n))) # 1.56
+(alp.2 <- 1 - 0.9406)
+(conf <- (1 - (2 * alp.2)) * 100)
+
+## d) Approximately how many batteries must be sampled
+#     so that a 95%confidence interval will specify
+#     the mean to within +/- 2 ampere-hours?
+z.025 <- 1.96
+(sd.sqrt.n <- (2 / z.025))
+(n <- (sd / sd.sqrt.n)^2)
+# 189 batteries must be sampled
+
+## e) Approximately how many batteries must be sampled
+#     so that a 99%confidence interval will specify
+#     the mean to within  +/- 2 ampere-hours?
+z.005 <- 2.58
+(sd.sqrt.n <- (2 / z.005))
+(n <- (sd / sd.sqrt.n)^2)
+# 327 batteries
+```
+
+## Section 5.3
+
+1.  Find the value of t(n-1,alpha/2) needed to construct a two-sided
+    confidence interval of the given level with the given sample size:
+
+```{r 5.3.1}
+## a) Level 90%, sample size 12.
+A.n <- 12
+(A.df <- A.n - 1)
+(A.alpha.2 <- (1 - .9) / 2)
+# df = 11, alpha/2 = 0.05; t = 1.796
+
+## b) Level 95%, sample size 7.
+B.n <- 7
+(B.df <- B.n - 1)
+(B.alpha.2 <- (1 - .95) / 2)
+# df = 6, alpha/2 = 0.025; t = 2.447
+
+## c) Level 99%, sample size 2.
+C.n <- 2
+(C.df <- C.n - 1)
+(C.alpha.2 <- (1 - .99) / 2)
+# df = 1, alpha/2 = 0.005; t = 63.657
+
+## d) Level 95%, sample size 29.
+D.n <- 29
+(D.df <- D.n - 1)
+(D.alpha.2 <- (1 - .95) / 2)
+# df = 28, alpha/2 = 0.025; t = 2.048
+```
+
+3.  Find the level of a two-sided confidence interval that is based on
+    the given value of t(n-1,alpha/2) and the given sample size.
+
+```{r 5.3.3}
+## a. t = 2.776, sample size 5.
+A.n <- 5
+(A.df <- A.n - 1)
+A.alpha <- 0.025 # from table
+(A.CI <- (1 - (2 * A.alpha)) * 100)
+# 95% CI
+
+## b. t = 2.718, sample size 12.
+B.n <- 12
+(B.df <- B.n - 1) # 11
+B.alpha <- 0.01 # from table
+(B.CI <- (1 - (2 * B.alpha)) * 100)
+# 98% CI
+
+## c. t = 5.841, sample size 4.
+C.n <- 4
+(C.df <- C.n - 1) # 3
+C.alpha <- 0.005 # from table
+(C.CI <- (1 - (2 * C.alpha)) * 100)
+# 99% CI
+
+## d. t = 1.325, sample size 21.
+D.n <- 21
+(D.df <- D.n - 1) # 20
+D.alpha <- 0.1 # from table
+(D.CI <- (1 - (2 * D.alpha)) * 100)
+# 80% CI
+
+## e. t = 1.746, sample size 17.
+E.n <- 17
+(E.df <- E.n - 1) # 16
+E.alpha <- 0.05 # from table
+(E.CI <- (1 - (2 * E.alpha)) * 100)
+# 90% CI
+```
+
+5.  The article “Wind-Uplift Capacity of Residential Wood Roof-Sheathing
+    Panels Retrofitted with Insulating Foam Adhesive” (P. Datin, D.
+    Prevatt, and W. Pang, Journal of Architectural Engineering,
+    2011:144–154) presents a study of the failure pressures of roof
+    panels. Following are the failure pressures, in kPa, for five panels
+    constructed with 6d smooth shank nails. These data are consistent
+    with means and standard deviations presented in the article.
+
+    3.32 2.53 3.45 2.38 3.01
+
+    Find a 95% confidence interval for the mean failure pressure for
+    this type of roof panel.
+
+```{r 5.3.5}
+d <- c(3.32, 2.53, 3.45, 2.38, 3.01)
+(x.bar <- mean(d))
+(s <- sd(d))
+n <- 5
+(df <- n - 1) # 4
+t <- 2.776 # from table
+(u.CI <- x.bar + (t * (s / sqrt(n))))
+(l.CI <- x.bar - (t * (s / sqrt(n))))
+# (2.352047, 3.523953)
+```
+
+7.  The article “An Automatic Visual System for Marble Tile
+    Classification” (L. Carrino, W. Polini, and S. Turchetta, Journal of
+    Engineering Manufacture, 2002:1095–1108) describes a measure for the
+    shade of marble tile in which the amount of light reflected by the
+    tile is measured on a scale of 0–255. A perfectly black tile would
+    reflect no light and measure 0, and a perfectly white tile would
+    measure 255. A sample of nine Mezza Perla tiles were measured, with
+    the following results: 204.999 206.149 202.102 207.048 203.496
+    206.343 203.496 206.676 205.831 Is it appropriate to use the
+    Student’s t statistic to construct a 95% confidence interval for the
+    mean shade of Mezza Perla tile? If so, construct the confidence
+    interval. If not, explain why not.
+
+```{r 5.3.7}
+tiles <- c(204.999, 206.149, 202.102, 207.048, 203.496,
+           206.343, 203.496, 206.676, 205.831)
+shapiro.test(tiles)
+# Yes, the test is appropriate as the data appear to be normally distributed
+# as W = 0.90314 is close to W = 1, and a p-value > 0.05 (p-value 0.2707)
+# indicates these data are not significantly different 
+# from a normal distribution.
+
+(x.bar <- mean(tiles))
+(s <- sd(tiles))
+(n <- length(tiles))
+(df <- n - 1)
+t8.025 <- 2.306 # from table
+(u.CI <- x.bar + (t8.025 * (s/sqrt(n))))
+(l.CI <- x.bar - (t8.025 * (s/sqrt(n))))
+# (203.8066, 206.4468) or 205.1267 +/- 1.3201
+```

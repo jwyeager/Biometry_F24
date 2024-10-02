@@ -11,6 +11,7 @@ editor_options:
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(rmarkdown)
+library(knitr)
 library(magrittr)
 library(gtools)
 ```
@@ -95,11 +96,10 @@ A. List all the possible outcomes.
 ```
 
 ```{r s2.1 q5.a}
-library(gtools)
 candidates <- c(1, 2, 3, 4)
 all.perms <- permutations(n = length(candidates), r = length(candidates), v = candidates)
 colnames(all.perms) <- c('first','second','third','fourth')
-all.perms %<>% as.tibble()
+all.perms %<>% as_tibble()
 all.perms$sequence <- paste0("Seq.", 1:24)
 all.perms
 ```
@@ -148,7 +148,8 @@ D2 <- all.perms %>% filter(second == 1 & first != 2)
 D3 <- all.perms %>% filter(third == 1 & first != 2 & second != 2)
 D <- rbind(D1,D2,D3)
 D
-# Outcomes where candidate 1 is interviewed before candidate 2 result in the event that candidate 2 is not interviewed.
+# Outcomes where candidate 1 is interviewed before candidate 2
+# result in the event that candidate 2 is not interviewed.
 ```
 
 ```         
@@ -243,7 +244,7 @@ B. The probability that an item produced by this process is
 13. Let S be the event that a randomly selected college student has
     taken a statistics course, and let C be the event that the same
     student has taken a chemistry course. Suppose P(S) = 0.4, P(C) =
-    0.3, and P(S ∩ C) = 0.2.
+    0.3, and P(S n C) = 0.2.
 
 ```{r s2.1 q13}
 P.S <- 0.4
@@ -341,25 +342,25 @@ P.AnB
 19. True or false: If A and B are mutually exclusive,
 
 ```         
-A. P(A ∪ B) = 0
+A. P(A U B) = 0
 ```
 
 *FALSE*
 
 ```         
-B. P(A ∩ B) = 0
+B. P(A n B) = 0
 ```
 
 *TRUE*
 
 ```         
-C. P(A ∪ B) = P(A ∩ B)
+C. P(A U B) = P(A n B)
 ```
 
 *FALSE*
 
 ```         
-D. P(A ∪ B) = P(A) + P(B)
+D. P(A U B) = P(A) + P(B)
 ```
 
 *TRUE*
@@ -374,6 +375,7 @@ D. P(A ∪ B) = P(A) + P(B)
 ```         
 A. How many different codons are there?
 ```
+
 ```{r s2.2 q1.a1}
 # to simply get number of codons:
 num.codons <- 4 * 4 * 4
@@ -385,28 +387,34 @@ num.codons
 bases <- c('A','G','C','T')
 codons <- permutations(n = length(bases), r = 3, 
                        v = bases, repeats.allowed = TRUE)
+colnames(codons) <- c('x1','x2','x3')
 codons <- codons %>% as_tibble()
 head(codons)
 ```
+
 ```         
 B. The bases A and G are purines, while C and T are
    pyrimidines. How many codons are there whose
    first and third bases are purines and whose second
    base is a pyrimidine?
 ```
+
 ```{r s2.2 q1.b}
 q1.b <- 2 * 2 * 2
 q1.b
 ```
+
 ```{r s2.2 q1.b2}
 # to list out codon sequences:
-q1.b2 <- codons %>% filter(V1 %in% c('A','G') & V3 %in% c('A','G')) %>% 
-  filter(V2 %in% c('C','T'))
+q1.b2 <- codons %>% filter(x1 %in% c('A','G') & x3 %in% c('A','G')) %>% 
+  filter(x2 %in% c('C','T'))
 q1.b2
 ```
-```
+
+```         
 C. How many codons consist of three different bases?
 ```
+
 ```{r s2.2 q1.c}
 q1.c <- 4 * 3 * 2
 q1.c
@@ -421,16 +429,18 @@ combos <- choose(n, k)
 print(combos)
 
 ```
-5. In horse racing, one can make a trifecta bet by specifying
-   which horse will come in first, which will come
-   in second, and which will come in third, in the correct
-   order. One can make a box trifecta bet by specifying
-   which three horses will come in first, second, and
-   third, without specifying the order.
-```
+
+5.  In horse racing, one can make a trifecta bet by specifying which
+    horse will come in first, which will come in second, and which will
+    come in third, in the correct order. One can make a box trifecta bet
+    by specifying which three horses will come in first, second, and
+    third, without specifying the order.
+
+```         
 A. In an eight-horse field, how many different ways
    can one make a trifecta bet?
 ```
+
 ```{r s2.2 q5.a}
 n <- 8
 k <- 3
@@ -438,10 +448,12 @@ k <- 3
 perms.a <- factorial(n) / factorial(n - k)
 print(perms.a)
 ```
-```
+
+```         
 B. In an eight-horse field, how many different ways
    can one make a box trifecta bet?
 ```
+
 ```{r s2.2 q5.b}
 combos.b <- choose(n, k)
 perms.b <- factorial(k)
@@ -449,11 +461,10 @@ tot <- combos.b * perms.b
 print(tot)
 ```
 
-7. A test consists of 15 questions. Ten are true-false
-   questions, and five are multiple-choice questions that
-   have four choices each. A student must select an answer
-   for each question. In how many ways can this
-   be done?
+7.  A test consists of 15 questions. Ten are true-false questions, and
+    five are multiple-choice questions that have four choices each. A
+    student must select an answer for each question. In how many ways
+    can this be done?
 
 ```{r s2.2 q7}
 n.TF <- 10
@@ -462,45 +473,51 @@ n.MC <- 5
 n.ans <- (2^n.TF) * (4^n.MC) # num. options ^ n. questions
 print(n.ans)
 ```
-9. A computer password consists of eight characters.
-```
+
+9.  A computer password consists of eight characters.
+
+```         
 A. How many different passwords are possible if
    each character may be any lowercase letter or
    digit?
 ```
+
 ```{r s2.2 q9.a}
 q9.a <- 36 ^ 8
 print(q9.a)
 ```
-```
+
+```         
 B. How many different passwords are possible if each
    character may be any lowercase letter or digit, and
    at least one character must be a digit?
 ```
+
 ```{r s2.2 q9.b}
 q9.b <- (36^8) - (26^8)
 print(q9.b)
 ```
-```
+
+```         
 C. A computer system requires that passwords contain
    at least one digit. If eight characters are generated
    at random, and each is equally likely to be any
    of the 26 letters or 10 digits, what is the probability
    that a valid password will be generated?
 ```
+
 ```{r s2.2 q9.c}
 q9.c <- q9.b / q9.a
 print(q9.c)
 ```
 
-11. One drawer in a dresser contains 8 blue socks and 6
-    white socks. A second drawer contains 4 blue socks
-    and 2 white socks. One sock is chosen from each
-    drawer. What is the probability that they match?
+11. One drawer in a dresser contains 8 blue socks and 6 white socks. A
+    second drawer contains 4 blue socks and 2 white socks. One sock is
+    chosen from each drawer. What is the probability that they match?
+
 ```{r s2.2 q11}
 pr.blue <- (8/14) * (4/6)
 pr.white <- (6/14) * (2/6)
 pr.match <- pr.blue + pr.white
 print(pr.match)
 ```
-
