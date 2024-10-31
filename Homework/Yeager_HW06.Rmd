@@ -1,0 +1,43 @@
+---
+title: "Biometry HW06"
+author: "Joel Yeager"
+date: "2024-10-31"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(magrittr)
+```
+
+## Section 7.1
+
+1. Compute the correlation coefficient for the following data set.
+
+x \| 1 2 3 4 5 6 7\
+y \| 2 1 4 3 7 5 6
+
+```{r 7.1.1}
+x <- c(1:7)
+y <- c(2,1,4,3,7,5,6)
+
+(corr <- cor(x, y))
+```
+
+3. For each of the following scatterplots, state whether
+the correlation coefficient is an appropriate summary,
+and explain briefly.  
+a) Correlation coefficient is seemingly appropriate because data appears linear,\
+and shows positive correlation.\
+b) Correlation coefficient is not appropriate as the 
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
