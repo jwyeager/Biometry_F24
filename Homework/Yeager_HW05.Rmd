@@ -13,52 +13,55 @@ library(magrittr)
 
 ## Section 6.1
 
-1.  In an experiment to measure the lifetimes of parts manufactured from a certain aluminum alloy, 73 parts were loaded cyclically until failure. The mean number of kilocycles to failure was 783, and the standard deviation was 120. Let u represent the mean number of kilocycles to failure for parts of this type. A test is made of H~0~: u =< 750 versus H~A~: u > 750.
+1.  In an experiment to measure the lifetimes of parts manufactured from a certain aluminum alloy, 73 parts were loaded cyclically until failure. The mean number of kilocycles to failure was 783, and the standard deviation was 120. Let u represent the mean number of kilocycles to failure for parts of this type. A test is made of H~0~: u =\< 750 versus H~A~: u \> 750.
 
-    a. Find the P-value.
-```{r 6.1.1a}
-n <- 73
-x.bar <- 783
-sd <- 120
-u <- 750
+    a.  Find the P-value.
 
-(z <- (x.bar - u) / (sd / sqrt(n)))
+    ```{r 6.1.1a}
+    n <- 73
+    x.bar <- 783
+    sd <- 120
+    u <- 750
 
-# using value from table
-(p <- 1 - 0.9906)
-```
+    (z <- (x.bar - u) / (sd / sqrt(n)))
 
-    b. Either the mean number of kilocycles to failure is greater than 750, or the sample is in the most extreme **0.94%** of its distribution.
+    # using value from table
+    (p <- 1 - 0.9906)
+    ```
 
-3. voltage measurements for a sample of 66 industrial networks in Estonia. Assume the rated voltage for these networks is 232V. The sample mean voltage was   231.7V with a standard deviation of 2.19V. Let u represent the population mean voltage for these networks.
+    b.  Either the mean number of kilocycles to failure is greater than 750, or the sample is in the most extreme **0.94%** of its distribution.
 
-    a. Find the P-value for testing H~0~: u = 232 versus H~A~: u != 232.
-```{r 6.1.3a}
-n <- 66
-x.bar <- 231.7
-sd <- 2.19
-u <- 232
+2.  voltage measurements for a sample of 66 industrial networks in Estonia. Assume the rated voltage for these networks is 232V. The sample mean voltage was 231.7V with a standard deviation of 2.19V. Let u represent the population mean voltage for these networks.
 
-(z <- (x.bar - u) / (sd / sqrt(n)))
+    a.  Find the P-value for testing H~0~: u = 232 versus H~A~: u != 232.
 
-(p <- 2 * 0.1335)
-```
+    ```{r 6.1.3a}
+    n <- 66
+    x.bar <- 231.7
+    sd <- 2.19
+    u <- 232
 
-5.  Suppose that at one firm, it is known that over the past few years employees have taken a mean of 5.4 sick days. This year, the firm introduces telecommuting. Management chooses a simple random sample of 80 employees to follow in detail, and, at the end of the year, these employees average 4.5 sick days with a standard deviation of 2.7 days. Let u represent the mean number of sick days for all employees of the firm.
+    (z <- (x.bar - u) / (sd / sqrt(n)))
+
+    (p <- 2 * 0.1335)
+    ```
+
+3.  Suppose that at one firm, it is known that over the past few years employees have taken a mean of 5.4 sick days. This year, the firm introduces telecommuting. Management chooses a simple random sample of 80 employees to follow in detail, and, at the end of the year, these employees average 4.5 sick days with a standard deviation of 2.7 days. Let u represent the mean number of sick days for all employees of the firm.
 
     a.  Find the P-value for testing H~0~ :u \>= 5.4 versus H~A~ :u =\< 5.4.
-```{r 6.1.5}
-n <- 80
-x.bar <- 4.5
-sd <- 2.7
-u <- 5.4
 
-(z <- (x.bar - u) / (sd / sqrt(n)))
+    ```{r 6.1.5}
+    n <- 80
+    x.bar <- 4.5
+    sd <- 2.7
+    u <- 5.4
 
-(p <- 1 - 0.9986)
-```
+    (z <- (x.bar - u) / (sd / sqrt(n)))
 
-    b.  Do you believe it is plausible that the mean number of sick days is at least 5.4, or are you convinced that it is less than 5.4? Explain your               reasoning.
+    (p <- 1 - 0.9986)
+    ```
+
+    b.  Do you believe it is plausible that the mean number of sick days is at least 5.4, or are you convinced that it is less than 5.4? Explain your reasoning.
 
     I am convinced that the mean number of sick days is less than 5.4 because the\
     probability of the null hypothesis being correct is 0.0014 or 0.14%
@@ -66,7 +69,7 @@ u <- 5.4
 ## Section 6.2
 
 1.  For which P-value is the null hypothesis more plausible: P = 0.5 or P = 0.05?\
-The null hypothesis is more plausible is p = 0.5.
+    The null hypothesis is more plausible is p = 0.5.
 
 2.  If P = 0.01, which is the best conclusion?
 
@@ -79,7 +82,7 @@ The null hypothesis is more plausible is p = 0.5.
     c.  The null hypothesis is rejected at the 5% level. **TRUE**
     d.  The null hypothesis is rejected at the 1% level. **FALSE**
 
-7.  In 2002, a law was passed requiring bars to close at 11 pm each night. After the law’s passage, the homicide rate dropped by an average of 9 homicides per month, a statistically significant decrease. Which of the following is the best conclusion?\
+6.  In 2002, a law was passed requiring bars to close at 11 pm each night. After the law’s passage, the homicide rate dropped by an average of 9 homicides per month, a statistically significant decrease. Which of the following is the best conclusion?\
 
 **iii**
 
@@ -88,78 +91,81 @@ The null hypothesis is more plausible is p = 0.5.
 1.  Each of the following hypothetical data sets represents some repeated weighings of a standard weight that is known to have a mass of 100 g. Assume that the readings are a random sample from a population that follows the normal curve. Perform a t test to see whether the scale is properly calibrated, if possible. If impossible, explain why.
 
     a.  100.02, 99.98, 100.03
-```{r 6.4.1}
-wt <- c(100.02, 99.98, 100.03)
-x <- mean(wt)
-sd <- sd(wt)
-n <- 3
-df <- n - 1
-u <- 100
 
-(t <- (x - u) / (sd / sqrt(n)))
+    ```{r 6.4.1}
+    wt <- c(100.02, 99.98, 100.03)
+    x <- mean(wt)
+    sd <- sd(wt)
+    n <- 3
+    df <- n - 1
+    u <- 100
 
-# between 0.5 and 0.8 on t-table, thus p = 0.58
-```
+    (t <- (x - u) / (sd / sqrt(n)))
+
+    # between 0.5 and 0.8 on t-table, thus p = 0.58
+    ```
 
     b.  100.01\
-    **Impossible.** Standard deviation cannot be calculated from a singular data point.
+        **Impossible.** Standard deviation cannot be calculated from a singular data point.
 
-3.  A new centrifugal pump is being considered for an application involving the pumping of ammonia. The specification is that the flow rate be more than 5 gallons per minute (gpm). In an initial study, eight runs were made. The average flow rate was 6.5 gpm and the standard deviation was 1.9 gpm. If the mean flow rate is found to meet the specification, the pump will be put into service.
+2.  A new centrifugal pump is being considered for an application involving the pumping of ammonia. The specification is that the flow rate be more than 5 gallons per minute (gpm). In an initial study, eight runs were made. The average flow rate was 6.5 gpm and the standard deviation was 1.9 gpm. If the mean flow rate is found to meet the specification, the pump will be put into service.
 
     a.  State the appropriate null and alternate hypotheses.\
-    H~0~: Flow rate =\< 5 gpm\ 
-    H~A~: Flow rate \> 5 gpm
+        H~0~: Flow rate =\< 5 gpm  H~A~: Flow rate \> 5 gpm
 
     b.  Find the P-value.
-```{r 6.4.3b}
-x <- 6.5
-sd <- 1.9
-n <- 8
-df <- n-1
-u <- 5
+
+    ```{r 6.4.3b}
+    x <- 6.5
+    sd <- 1.9
+    n <- 8
+    df <- n-1
+    u <- 5
 
 
-(t <- (x - u) / (sd / sqrt(n)))
+    (t <- (x - u) / (sd / sqrt(n)))
 
-# From t-table, 0 .025 - -0.05
-# P = 0.03
-```
+    # From t-table, 0 .025 - -0.05
+    # P = 0.03
+    ```
 
     c.  Should the pump be put into service? Explain.\
         p-value of 0.03 indicates to reject the null hypothesis, thus the pump should be in service.
 
-5.  twenty 2-L specimens of water were drawn from a public works building in Bridgewater, Nova Scotia. The mean lead concentration was 6.7ug/L with a standard deviation of 3.9ug/L.
+3.  twenty 2-L specimens of water were drawn from a public works building in Bridgewater, Nova Scotia. The mean lead concentration was 6.7ug/L with a standard deviation of 3.9ug/L.
 
     a.  The Health Canada guideline states that the concentration should be less than 10ug/L.\
         Can you conclude that the water in this system meets the guideline?
-```{r 6.4.5a}
-x <- 6.7
-sd <- 3.9
-n <- 20
-df <- n - 1
-u <- 10
+
+    ```{r 6.4.5a}
+    x <- 6.7
+    sd <- 3.9
+    n <- 20
+    df <- n - 1
+    u <- 10
 
 
-(t <- (x - u) / (sd / sqrt(n)))
+    (t <- (x - u) / (sd / sqrt(n)))
 
-# from t-table, 0.0005 and 0.001
-# thus P = 0.0006, and should comfortably conclude that guideline is met.
-```
+    # from t-table, 0.0005 and 0.001
+    # thus P = 0.0006, and should comfortably conclude that guideline is met.
+    ```
 
     b.  A stricter guideline is being considered, which would require the concentration to be less than 7.5ug/L.\
         Can you conclude that the water in this system meets this guideline?
-```{r 6.4.5b}
-x <- 6.7
-sd <- 3.9
-n <- 20
-df <- n - 1
-u <- 7.5
 
-(t <- (x - u) / (sd / sqrt(n)))
+    ```{r 6.4.5b}
+    x <- 6.7
+    sd <- 3.9
+    n <- 20
+    df <- n - 1
+    u <- 7.5
 
-# From t-table, between 0.1 and 0.25
-# P = 0.1852, thus it is plausible that the system does not meet the guideline
-```
+    (t <- (x - u) / (sd / sqrt(n)))
+
+    # From t-table, between 0.1 and 0.25
+    # P = 0.1852, thus it is plausible that the system does not meet the guideline
+    ```
 
 ## Section 6.7
 
@@ -168,8 +174,11 @@ u <- 7.5
 Dye A: 1.0, 2.0, 1.2, 3.0\
 Dye B: 3.0, 3.2, 2.6, 3.4
 
-    a.  Can you conclude that the mean strength of crayons made with dye B\
-    is greater than that of crayons made with dye A?
+```         
+a.  Can you conclude that the mean strength of crayons made with dye B\
+is greater than that of crayons made with dye A?
+```
+
 ```{r 6.7.1a}
 dA <- c(1.0,2.0,1.2,3.0)
 dB <- c(3.0,3.2,2.6,3.4)
@@ -183,8 +192,11 @@ n <- 4
 (v <- ((s.x^2 / n) + (s.y^2 / n))^2 / ((((s.x^2 / n)^2) / (n - 1)) + (((s.y^2/ n))^2 / (n - 1))))
 ```
 
-    b.  Can you conclude that the mean strength of crayons made with dye B\
-    exceeds that of crayons made with dye A by more than 1 J?
+```         
+b.  Can you conclude that the mean strength of crayons made with dye B\
+exceeds that of crayons made with dye A by more than 1 J?
+```
+
 ```{r 6.7.1b}
 x <- mean(dB)
 y <- mean(dA)
@@ -199,10 +211,10 @@ n <- 4
 ```
 
 3.  measures penetration resistance, expressed as a multiple of a standard quantity,\
-for a certain fine-grained soil. Fifteen measurements taken at a depth of 1 m had a mean\
-of 2.31 with a standard deviation of 0.89. Fifteen measurements taken at a depth of 2 m\
-had a mean of 2.80 with a standard deviation of 1.10.\
-Can you conclude that the penetration resistance differs between the two depths?
+    for a certain fine-grained soil. Fifteen measurements taken at a depth of 1 m had a mean\
+    of 2.31 with a standard deviation of 0.89. Fifteen measurements taken at a depth of 2 m\
+    had a mean of 2.80 with a standard deviation of 1.10.\
+    Can you conclude that the penetration resistance differs between the two depths?
 
 ```{r 6.7.3}
 
@@ -223,11 +235,11 @@ n <- 15
 ```
 
 5.  the effect of adding slow release fertilizer to the usual solution on the growth of trees.\
-Following are the heights, in cm, of 10 trees grown with the usual fertilizer (the control group),\
-and 10 trees grown with the slow-release fertilizer (treatment). These data are consistent\
-with the mean and standard deviation reported in the article.\
-Can you conclude that the mean height of plants grown with slow-release fertilizer\
-is greater than that of plants with the usual fertilizer?
+    Following are the heights, in cm, of 10 trees grown with the usual fertilizer (the control group),\
+    and 10 trees grown with the slow-release fertilizer (treatment). These data are consistent\
+    with the mean and standard deviation reported in the article.\
+    Can you conclude that the mean height of plants grown with slow-release fertilizer\
+    is greater than that of plants with the usual fertilizer?
 
     Usual 17.3 22.0 19.5 18.7 19.5\
     18.5 18.6 20.3 20.3 20.3\
@@ -272,49 +284,53 @@ n.y <- length(slo)
     the true mean lifetime is 49,500 miles.
 
     a.  State the null and alternate hypotheses. Which hypothesis is true?\
-            H~0~: mean tire life is \>= 50000 miles\
-            H~A~: mean tire tire life is \< 50000 miles\
-            H~A~ is true because the true mean tire life is less than 50000.
+        H~0~: mean tire life is \>= 50000 miles\
+        H~A~: mean tire tire life is \< 50000 miles\
+        H~A~ is true because the true mean tire life is less than 50000.
 
     b.  It is decided to reject H0 if the sample mean is less than 49,400.\
         Find the level and power of this test.
-```{r 6.13.5b}
-x <- 50000
-s <- 5000 / sqrt (100)
-(z.b1 <- (49400 - x) / s)
-(z.b2 <- (49400 - 49500) / s)
 
-# p = 0.1151; Beta = 0.4207
-```
+    ```{r 6.13.5b}
+    x <- 50000
+    s <- 5000 / sqrt (100)
+    (z.b1 <- (49400 - x) / s)
+    (z.b2 <- (49400 - 49500) / s)
 
-    c. If the test is made at the 5% level, what is the power?
-```{r 6.13.5c}
-x <-  50000
-s <- 5000 / sqrt(100)
-z <- 1.645 # from table
+    # p = 0.1151; Beta = 0.4207
+    ```
 
-five.p <- x - z * s
+    c.  If the test is made at the 5% level, what is the power?
 
-(power.q5 <- (five.p - 49500) / s)
+    ```{r 6.13.5c}
+    x <-  50000
+    s <- 5000 / sqrt(100)
+    z <- 1.645 # from table
 
-# Beta = 0.2578
-```
+    five.p <- x - z * s
 
-    d. At what level should the test be conducted so that the power is 0.80?
-```{r 6.13.5d}
-x <- 49500
-s <- 5000 / sqrt(100)
-B <- 0.8
-z <- 0.84
+    (power.q5 <- (five.p - 49500) / s)
 
-(x.b <- x + z * sd)
+    # Beta = 0.2578
+    ```
 
-(lvl <- (x.b - 50000) / s)
-```
+    d.  At what level should the test be conducted so that the power is 0.80?
 
-    e. You are given the opportunity to sample more tires. How many tires should be\
-    sampled in total so that the power is 0.80 if the test is made at the 5% level?
-```{r 6.13.5e}
-# solve for n (number of tires)
-(n <- (5000 / (500 / (0.84 + 1.645)))^2)
-```
+    ```{r 6.13.5d}
+    x <- 49500
+    s <- 5000 / sqrt(100)
+    B <- 0.8
+    z <- 0.84
+
+    (x.b <- x + z * sd)
+
+    (lvl <- (x.b - 50000) / s)
+    ```
+
+    e.  You are given the opportunity to sample more tires. How many tires should be\
+        sampled in total so that the power is 0.80 if the test is made at the 5% level?
+
+    ```{r 6.13.5e}
+    # solve for n (number of tires)
+    (n <- (5000 / (500 / (0.84 + 1.645)))^2)
+    ```
