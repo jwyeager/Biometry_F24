@@ -1,0 +1,140 @@
+---
+title: "Yeager_HW07"
+author: "Joel Yeager"
+date: "2024-10-31"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+```
+
+## Section 8.1
+
+1.  In an experiment to determine the factors affecting tensile strength in steel plates, the tensile strength (in kg/mm2), the manganese content (in parts per thousand), and the thickness (in mm) were measured for a sample of 20 plates. The following MINITAB output presents the results of fitting the model Tensile strength = B0 + B1 Manganese + B2 Thickness.
+
+    a.  Predict the strength for a specimen that is 10 mm thick and contains\
+        8.2 ppt manganese.
+
+    ```{r 8.1.1a}
+    (p8.1.1a <- 26.641 + 3.3201 * 8.2 - 0.4249 * 10)
+    ```
+
+    b.  If two specimens have the same thickness, and one contains 10 ppt more\
+        manganese, by how much would you predict their strengths to differ?
+
+    ```{r 8.1.1b}
+    (p8.1.1b <- 3.3201 * 10)
+    ```
+
+    c.  If two specimens have the same proportion of manganese, and one is\
+        5 mm thicker than the other, by how much would you predict their\
+        strengths to differ?
+
+    ```{r 8.1.1c}
+    (p8.1.1c <- 0.4249 * 5)
+    ```
+
+2.  The data used to fit the model in Exercise 1 are presented in the\
+    following table, along with the residuals and the fitted values. Plot the\
+    residuals versus the fitted values. Does the plot indicate that the linear\
+    model is reasonable? Explain.
+
+```{r 8.1.3}
+res<- c(-0.111, -0.709, 0.091, 0.291, -0.517, 0.790, -0.517, -0.010, 0.89,
+        0.214, -0.464, -0.864, 0.121, -0.164, -0.181, -0.206, 1.619, -1.764,
+        1.446, 0.04)
+fit<- c(47.811, 51.609, 51.609, 51.609, 50.517, 49.710, 50.517, 49.710, 49.710,
+        47.486, 47.564, 45.864, 47.479, 45.864, 47.181, 45.906, 47.181, 47.564,
+        47.054, 48.560)
+plot(fit, res)
+abline(0,0)
+```
+
+No apparent pattern of residuals, thus a non-linear relationship\
+is not likely and a linear model would be more appropriate.
+
+5.  a fitted model for predicting the extraction of manganese in % (y) from\
+    particle size in mm (x~1~), the amount of sulfur dioxide in multiples of the\
+    stoichiometric quantity needed for the dissolution of manganese (x~2~),\
+    and the duration of leaching in minutes (x~3~) is given as:
+
+y = 56.145 − 9.046x~1~ − 33.421x~2~ + 0.243x~3~ − 0.5963x~1~x~2~ − 0.0394x~1~x~3~ + 0.6022x~2~x~3~ + 0.6901x~1~^2^ + 11.7244x~2~^2^ − 0.0097x~3~^2^
+
+  There were a total of n = 27 observations, with SSE = 209.55 and SST = 6777.5.
+
+    a. Predict the extraction percent when the particle size is 3 mm,\
+    the amount of sulfur dioxide is 1.5, and the duration of leaching\
+    is 20 minutes.
+```{r 8.1.5a}
+(q8.1.5a <- 56.145 - 9.046 * 3 - 33.421 * 1.5 + 0.243 * 20 - 0.5963 * 3 * 1.5 - 0.0394 * 3 * 20 + 0.6022 * 1.5 * 20 + 0.6901 * (3^2) + 11.7244 * (1.5^2) - 0.0097 * (20^2))
+```
+
+    b. Is it possible to predict the change in extraction percent when the\
+    duration of leaching increases by one minute? If so, find the predicted\
+    change. If not, explain why not. 
+  No. There are additional factors that influence the relationship.
+  
+    c. Compute the coefficient of determination *R~2~*.
+```{r 8.1.5c}
+(q8.1.5c <- (6777.5 - 209.55) / 6777.5)
+```
+
+    d. Compute the F statistic for testing the null hypothesis that all the\
+    coefficients are equal to 0. Can this hypothesis be rejected?
+```{r 8.1.5d}
+(fStat <- ((6777.5 - 209.55) / 9) / (209.55 / 17))
+
+# According to table for this F-statistic, p < 0.001 and thus we should reject
+# the null hypothesis
+```
+
+7. In a study of the lung function of children, the volume of air exhaled under force in one second is called FEV1.Measurements were made on a group of children each year for two years. A linear model was fit to predict this year’s FEV1 as a function of last year’s FEV1 (in liters), the child’s gender (0 = Male, 1 = Female), the child’s height (in m), and the ambient atmospheric pressure (in mm). The following MINITAB output presents the results of fitting the model
+
+    a. Predict the FEV1 for a boy who is 1.4 m tall, if the measurement was\
+       taken at a pressure of 730 mm and last year’s measurement was 2.113 L.
+```{r 8.1.7a}
+(q8.1.7a <- -0.21947 + 0.779 * 2.113 - 0.10827 * 0 + 1.3536 * 1.4 - 0.0013431 * 730)
+```
+
+    b. If two girls differ in height by 5 cm, by how much would you expect\
+       their FEV1 measurements to differ, other things being equal?
+```{r 8.1.7b}
+(q8.1.7b <- 1.3536 * 0.05)
+```
+
+    c. The constant term B~0~ is estimated to be negative. But FEV1 must always\
+    be positive. Is something wrong? Explain.
+    
+  This is fine, B~0~ is the y-intercept and because height is on the y axis\
+  and a person cannot have a negative height the value is theoretical.
+  
+9. (too much text to include)
+
+    a. Predict the pH for a pulp with a viscosity of 1500 kg/m * s, a density\
+       of 1.04 g/cm^3^, and a BRIX of 17.5%.
+```{r 8.1.9a}
+(pH <- -1.7914 + 0.00026626 * 1500 + 9.8184 * 1.04 - 0.29982 * 17.5)
+```
+
+    b. If two pulps differ in density by 0.01 g/cm3, by how much would you\
+       expect them to differ in pH, other things being equal?
+```{r 8.1.9b}
+(q8.1.9b <- 9.8184 * 0.01)
+```
+
+    c. The constant term β0 is estimated to be negative. But pulp pH must\
+       always be positive. Is something wrong? Explain.
+  This is also fine. It is the theoretical pH value for a pulp with density = 0
+
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
