@@ -62,27 +62,39 @@ is not likely and a linear model would be more appropriate.
 
 y = 56.145 − 9.046x~1~ − 33.421x~2~ + 0.243x~3~ − 0.5963x~1~x~2~ − 0.0394x~1~x~3~ + 0.6022x~2~x~3~ + 0.6901x~1~^2^ + 11.7244x~2~^2^ − 0.0097x~3~^2^
 
-  There were a total of n = 27 observations, with SSE = 209.55 and SST = 6777.5.
+There were a total of n = 27 observations, with SSE = 209.55 and SST = 6777.5.
 
-    a. Predict the extraction percent when the particle size is 3 mm,\
-    the amount of sulfur dioxide is 1.5, and the duration of leaching\
-    is 20 minutes.
+```         
+a. Predict the extraction percent when the particle size is 3 mm,\
+the amount of sulfur dioxide is 1.5, and the duration of leaching\
+is 20 minutes.
+```
+
 ```{r 8.1.5a}
 (q8.1.5a <- 56.145 - 9.046 * 3 - 33.421 * 1.5 + 0.243 * 20 - 0.5963 * 3 * 1.5 - 0.0394 * 3 * 20 + 0.6022 * 1.5 * 20 + 0.6901 * (3^2) + 11.7244 * (1.5^2) - 0.0097 * (20^2))
 ```
 
-    b. Is it possible to predict the change in extraction percent when the\
-    duration of leaching increases by one minute? If so, find the predicted\
-    change. If not, explain why not. 
-  No. There are additional factors that influence the relationship.
-  
-    c. Compute the coefficient of determination *R~2~*.
+```         
+b. Is it possible to predict the change in extraction percent when the\
+duration of leaching increases by one minute? If so, find the predicted\
+change. If not, explain why not. 
+```
+
+No. There are additional factors that influence the relationship.
+
+```         
+c. Compute the coefficient of determination *R~2~*.
+```
+
 ```{r 8.1.5c}
 (q8.1.5c <- (6777.5 - 209.55) / 6777.5)
 ```
 
-    d. Compute the F statistic for testing the null hypothesis that all the\
-    coefficients are equal to 0. Can this hypothesis be rejected?
+```         
+d. Compute the F statistic for testing the null hypothesis that all the\
+coefficients are equal to 0. Can this hypothesis be rejected?
+```
+
 ```{r 8.1.5d}
 (fStat <- ((6777.5 - 209.55) / 9) / (209.55 / 17))
 
@@ -90,51 +102,214 @@ y = 56.145 − 9.046x~1~ − 33.421x~2~ + 0.243x~3~ − 0.5963x~1~x~2~ − 0.039
 # the null hypothesis
 ```
 
-7. In a study of the lung function of children, the volume of air exhaled under force in one second is called FEV1.Measurements were made on a group of children each year for two years. A linear model was fit to predict this year’s FEV1 as a function of last year’s FEV1 (in liters), the child’s gender (0 = Male, 1 = Female), the child’s height (in m), and the ambient atmospheric pressure (in mm). The following MINITAB output presents the results of fitting the model
+7.  In a study of the lung function of children, the volume of air exhaled under force in one second is called FEV1.Measurements were made on a group of children each year for two years. A linear model was fit to predict this year’s FEV1 as a function of last year’s FEV1 (in liters), the child’s gender (0 = Male, 1 = Female), the child’s height (in m), and the ambient atmospheric pressure (in mm). The following MINITAB output presents the results of fitting the model
 
-    a. Predict the FEV1 for a boy who is 1.4 m tall, if the measurement was\
-       taken at a pressure of 730 mm and last year’s measurement was 2.113 L.
-```{r 8.1.7a}
-(q8.1.7a <- -0.21947 + 0.779 * 2.113 - 0.10827 * 0 + 1.3536 * 1.4 - 0.0013431 * 730)
+    a.  Predict the FEV1 for a boy who is 1.4 m tall, if the measurement was\
+        taken at a pressure of 730 mm and last year’s measurement was 2.113 L.
+
+    ```{r 8.1.7a}
+    (q8.1.7a <- -0.21947 + 0.779 * 2.113 - 0.10827 * 0 + 1.3536 * 1.4 - 0.0013431 * 730)
+    ```
+
+    b.  If two girls differ in height by 5 cm, by how much would you expect\
+        their FEV1 measurements to differ, other things being equal?
+
+    ```{r 8.1.7b}
+    (q8.1.7b <- 1.3536 * 0.05)
+    ```
+
+    c.  The constant term B~0~ is estimated to be negative. But FEV1 must always\
+        be positive. Is something wrong? Explain.
+
+This is fine, B~0~ is the y-intercept and because height is on the y axis\
+and a person cannot have a negative height the value is theoretical.
+
+9.  (too much text to include)
+
+    a.  Predict the pH for a pulp with a viscosity of 1500 kg/m \* s, a density\
+        of 1.04 g/cm^3^, and a BRIX of 17.5%.
+
+    ```{r 8.1.9a}
+    (pH <- -1.7914 + 0.00026626 * 1500 + 9.8184 * 1.04 - 0.29982 * 17.5)
+    ```
+
+    b.  If two pulps differ in density by 0.01 g/cm^3^, by how much would you\
+        expect them to differ in pH, other things being equal?
+
+    ```{r 8.1.9b}
+    (q8.1.9b <- 9.8184 * 0.01)
+    ```
+
+    c.  The constant term B~0~ is estimated to be negative. But pulp pH must\
+        always be positive. Is something wrong? Explain. This is also fine. It is the theoretical pH value for a pulp with density = 0
+
+## Section 8.2
+
+1.  In an experiment to determine factors related to weld toughness, the Charpy V-notch impact toughness in ft · lb (y) was measured for 22 welds at 0C, along with the lateral\
+    expansion at the notch in % (x~1~), and the brittle fracture surface in % (x~2~).
+
+    a.  Fit the model y = B~0~ + B~1~x~1~ + E. For each coefficient, test the null\
+        hypothesis that it is equal to 0.
+
+```{r 8.2.1a}
+y <- c(32, 39, 20, 21, 25, 20, 32, 29, 27, 43, 22, 22, 18, 32, 22, 25, 25, 20, 20,
+       24, 18, 28)
+x1 <- c(20, 23, 12.8, 16, 10.2, 11.6, 17.6, 17.8, 16, 26.2, 9.6, 15.2, 8.8, 20.4, 12.2,
+        14.6, 10.4, 11.6, 12.6, 16.2, 9.2, 16.8)
+x2 <- c(28, 28, 32, 29, 31, 28, 25, 28, 29, 27, 32, 32, 43, 24, 36, 36, 29, 30, 31,
+        36, 34, 30)
+
+q8.2.1a <- lm(y ~ x1)
+summary(q8.2.1a)
+
+# p-value indicates both B0 and B1 differ from 0
 ```
 
-    b. If two girls differ in height by 5 cm, by how much would you expect\
-       their FEV1 measurements to differ, other things being equal?
-```{r 8.1.7b}
-(q8.1.7b <- 1.3536 * 0.05)
+```         
+b. Fit the model y = B~0~ + B~1~x~2~ + E. For each coefficient, test the null\
+   hypothesis that it is equal to 0.
 ```
 
-    c. The constant term B~0~ is estimated to be negative. But FEV1 must always\
-    be positive. Is something wrong? Explain.
-    
-  This is fine, B~0~ is the y-intercept and because height is on the y axis\
-  and a person cannot have a negative height the value is theoretical.
+```{r 8.2.1b}
+q8.2.1b <- lm(y ~ x2)
+summary(q8.2.1b)
+
+# p-value indicates both B0 and B1 differ from 0
+```
+
+```         
+c. Fit the model y = B~0~ + B~1~x~1 + B~2~x~2~ + E. For each coefficient, test the null\
+   hypothesis that it is equal to 0.
+```
+
+```{r 8.2.1c}
+q8.2.1c <- lm(y ~ x1 + x2)
+summary(q8.2.1c)
+# B0 and B1 differ from 0, however B2 does not, based on the pvalues.
+```
+
+```         
+d. Which of the models in parts (a) through (c) is the best of the three?\
+Why do you think so?
+```
+
+Model A is likely the best as it has the highest R^2^ value.
+
+3.  Two chemical engineers, A and B, are working independently to develop a model to predict the viscosity of a product (y) from the pH (x~1~) and the concentration of a certain\
+    catalyst (x~2~). Each engineer has fit the linear model.....
+
+    a.  Which plot came from which engineer? How do you know? Plot i = Eng. B, and Plot ii = Eng. A. Eng. A data differs from 0.
+
+    b.  Which engineer’s experiment produced the more reliable results? Explain. Engineer A is more reliable because Engineer B's is collinear
+
+4.  Refer to Exercise 10 in Section 7.4.
+
+    a.  Divide the data into two groups: points where R~1~ \< 4 in one group,\
+        points where R~1~ ≥ 4 in the other. Compute the least-squares line for predicting\
+        R~2~ from R~1~ for each group.
+
+    ```{r 8.2.5a}
+    r1 <- c(1.2, 1.3, 1.3, 1.3, 1.5, 1.5, 1.6, 2, 2, 2.4, 2.9, 3, 3.4, 3.5, 3.6, 3.6, 3.7,
+          3.8, 3.8, 3.8, 3.9, 3.9, 3.9, 3.9, 4, 4, 4.3, 4.3, 4.4, 4.4, 4.7, 4.7, 4.8, 4.8,
+          4.9, 5.4, 5.5, 5.8, 5.9, 6, 6, 6.1, 6.2, 6.5, 6.9, 7)
+    r2 <- c(1.2, 1.5, 1.6, 1.7, 1.7, 1.7, 1.8, 1.8, 1.9, 1.9, 2, 2, 2, 2.1, 2.1, 2.1,
+            2.2, 2.2, 2.3, 2.3, 2.4, 2.4, 2.4, 2.6, 2.7, 2.7, 2.8, 2.9, 3, 3.1, 3.2, 3.2,
+            3.5, 3.5, 3.5, 3.6, 3.6, 3.9, 4, 4.2, 4.4, 4.4, 4.4, 4.4, 4.7, 4.8 )
+
+    tab <- data.frame(r1, r2)
+
+    g1 <- tab[tab$r1 < 4, ]
+    g2 <- tab[tab$r1 >= 4, ]
+
+
+    mg1 <- lm(r2 ~ r1, data = g1)
+
+
+    mg2 <- lm(r2 ~ r1, data = g2)
+
+
+    summary(mg1)
+    summary(mg2)
+
+    # less than 4 y = 1.19771 + 0.28675x
+    # greater than or equal to 4 y = -0.07631 + 0.70479
+    ```
+
+    b.  For one of the two groups, the relationship is clearly nonlinear. For this group, fit a quadratic model, a cubic model, and a quartic model. Compute the P-values for each of the coefficients in each of the models.
+
+    ```{r 8.2.5b}
+    quad_model <- lm(r2 ~ poly(r1, 2), data = g1)
+    summary(quad_model)
+
+    cubic_model <- lm(r2 ~ poly(r1, 3), data = g1)
+    summary(cubic_model)
+
+    quartic_model <- lm(r2 ~ poly(r1, 4), data = g1)
+    summary(quartic_model)
+    ```
+
+    c.  Plot the residuals versus the fitted values for each of the three models in part (b).
+
+    ```{r 8.2.5c}
+    plot_residuals <- function(model, model_name) {
+      residuals <- model$residuals
+      fitted_values <- model$fitted.values
+      
+      plot(fitted_values, residuals, 
+           main=paste(model_name, "resids vs. fitted"),
+           xlab="fitted", ylab="resids",
+           pch=19, col="gray")
+      abline(h=0, col="black", lwd=2) 
+    }
+
+    plot_residuals(quad_model, "quad")
+    plot_residuals(cubic_model, "cubic")
+    plot_residuals(quartic_model, "quartic")
+    ```
+
+    d.  Compute the correlation coefficient between R1^3^ and R1^4^ , and make a\
+        scatterplot of the points
+
+    ```{r s8.2.5d}
+    pred_cubic <- predict(cubic_model)
+    pred_quartic <- predict(quartic_model)
+
+
+    cor(pred_cubic, pred_quartic)
+
+
+    plot(pred_cubic, pred_quartic)
+
+    # Collinear
+    ```
+
+    e. On the basis of the correlation coefficient and the scatterplot, explain\
+    why the P-values are much different for the quartic model than for the cubic model.
+  Cubic model explains most, others seem unnecessay. Collinear.
   
-9. (too much text to include)
+    f. Which of the three models in part (b) is most appropriate? Why?
+  Cubic. Resid plot is also fine.Qartic and cubic are collinear, so other is un-needed.
+  
+## 8.3 1, 3, 5
 
-    a. Predict the pH for a pulp with a viscosity of 1500 kg/m * s, a density\
-       of 1.04 g/cm^3^, and a BRIX of 17.5%.
-```{r 8.1.9a}
-(pH <- -1.7914 + 0.00026626 * 1500 + 9.8184 * 1.04 - 0.29982 * 17.5)
-```
+1. True or false:
 
-    b. If two pulps differ in density by 0.01 g/cm3, by how much would you\
-       expect them to differ in pH, other things being equal?
-```{r 8.1.9b}
-(q8.1.9b <- 9.8184 * 0.01)
-```
+    a. For any set of data, there is always one best model. 
+  *False*
+  
+    b. When there is no physical theory to specify a model, there is usually no best model, but many that are about equally good.
+  *True*
+  
+    c. Model selection methods such as best subsets and stepwise regression, when properly used, are scientifically designed to find the best available model.
+  *False*
+  
+    d. Model selection methods such as best subsets and stepwise regression, when properly used, can suggest models that fit the data well.
+  *True*
 
-    c. The constant term β0 is estimated to be negative. But pulp pH must\
-       always be positive. Is something wrong? Explain.
-  This is also fine. It is the theoretical pH value for a pulp with density = 0
+3. Of the following, which is the best next step in the analysis? Explain your reasoning.
 
+    (v) because predictor vars have larger p vals
 
-## Including Plots
+5. Of the following, which is the best next step in the analysis? Explain your reasoning.
 
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+    (iv) carbon and silicon = large p value; less likely to impact the model
