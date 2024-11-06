@@ -13,31 +13,134 @@ library(magrittr)
 
 ## Section 7.1
 
-1. Compute the correlation coefficient for the following data set.
+1.  Compute the correlation coefficient for the following data set.
 
-x \| 1 2 3 4 5 6 7\
-y \| 2 1 4 3 7 5 6
+    x \| 1 2 3 4 5 6 7\
+    y \| 2 1 4 3 7 5 6
 
 ```{r 7.1.1}
 x <- c(1:7)
 y <- c(2,1,4,3,7,5,6)
 
-(corr <- cor(x, y))
+corr <- cor(x, y)
+corr
 ```
 
-3. For each of the following scatterplots, state whether
-the correlation coefficient is an appropriate summary,
-and explain briefly.  
-a) Correlation coefficient is seemingly appropriate because data appears linear,\
-and shows positive correlation.\
-b) Correlation coefficient is not appropriate as the 
+3.  For each of the following scatterplots, state whether the correlation coefficient is an appropriate summary, and explain briefly.
 
-## Including Plots
+    a.  Correlation coefficient is seemingly appropriate because data appears linear,\
+        and shows positive correlation.
+    b.  Correlation coefficient is not appropriate as the data do not appear\
+        to be linearly associated.
+    c.  Correlation coeficient not appropriate as there are several outliers\
+        present in the data.
 
-You can also embed plots, for example:
+4.  An investigator collected data on heights and weights of college students.\
+    The correlation between height and weight for men was about 0.6, and for\
+    women it was about the same. If men and women are taken together, will the\
+    correlation between height and weight be more than 0.6, less than 0.6,\
+    or about equal to 0.6? It might be helpful to make a rough scatterplot.
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+    Correlation coefficient would be less than 0.6 as the additional\
+    between group variation remains unexplained by simple x-y relationships.
+
+## Section 7.2
+
+1.  Each month for several months, the average temperature in C (x) and the number of pounds of steam (y) consumed by a certain chemical plant were measured. The least-squares line computed from the resulting data is y = 245.82 + 1.13x.
+
+    a.  Predict the number of pounds of steam consumed in a month where the\
+        average temperature is 65C.
+
+```{r 7.2.1a }
+(p7.2.1a <- 245.82 + (1.13 * 65))
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+```         
+b.  If two months differ in their average temperatures by 5C, by how much\
+    do you predict the number of pounds of steam consumed to differ?
+```
+
+```{r 7.2.1b }
+(p7.2.1b <- 1.13 * 5)
+```
+
+2.  A least-squares line is fit to a set of points. If the total sum of squares\
+    is SUM(y~i~ - ybar)\^2 = 9615, and the error sum of squares is\
+    SU\<(y~i~ - yhat~i~)\^2 = 1450, compute the coefficient of determination r\^2.
+
+```{r 7.2.3}
+(r2 <- 1450 / 9615)
+```
+
+5.  In Galton’s height data (Figure 7.1, in Section 7.1), the least-squares line\
+    for predicting forearm length (y) from height (x) is y = -0.2967 + 0.2738x.
+
+    a.  Predict the forearm length of a man whose height is 70 in.
+
+```{r 7.2.5a}
+(p7.2.5a <- -0.2967 + (0.2738 * 70))
+```
+
+```         
+b.  How tall must a man be so that we would predict his forearm length to be 19 in.?
+```
+
+```{r 7.2.5b}
+(p7.2.5b <- (19 + 0.2967) / 0.2738)
+```
+
+```         
+c.  All the men in a certain group have heights greater than the height\
+    computed in part (b). Can you conclude that all their forearms will be at\
+    least 19 in. long? Explain.\
+```
+
+No. Observations below the least-squares line would have forearms \< 19 in.
+
+6.  Moisture content in percent by volume (x) and conductivity in mS/m (y) were\
+    measured for 50 soil specimens. The means and standard deviations were x = 8.1,\
+    sx = 1.2, y = 30.4, sy = 1.9. The correlation between conductivity and moisture\
+    was computed to be r = 0.85. Find the equation of the least-squares line\
+    for predicting soil conductivity from moisture content.
+
+```{r 7.2.7}
+(b.1 <- 1.9 * 0.85 / 1.2)
+
+(b.0 <- 30.4 - b.1 * 8.1)
+
+# plugged into "y = mx + b"; y = 1.345833x + 19.49875
+```
+
+## Section 7.4
+
+1.  The following output (from MINITAB) is for the least-squares fit of the\
+    model ln y = Beta0 + Beta1 ln x + E, where y represents the monthly production\
+    of a gas well and x represents the volume of fracture fluid pumped in.\
+    (A scatterplot of these data is presented in Figure 7.22.)
+
+    a.  What is the equation of the least-squares line for predicting ln y from ln x?\
+        **ln(y) = -0.4442 + 0.79833 \* ln(x)**
+
+    b.  Predict the production of a well into which 2500 gal/ft of fluid have been pumped.
+
+```{r 7.4.1b}
+(p7.4.1b <- exp(-0.4442 +0.79833 * log(2500)))
+```
+
+```         
+c.  Predict the production of a well into which 1600 gal/ft of fluid have been pumped.
+```
+
+```{r 7.4.1c}
+(p7.4.1c <- exp(-0.4442 + 0.79833 * log(1600)))
+```
+
+```         
+d.  Find a 95% prediction interval for the production of a well into which\
+    1600 gal/ft of fluid have been pumped.(Note: ln 1600 = 7.3778.)
+```
+
+```{r 7.4.1d}
+(LCI <- exp(3.9738))
+(UCI <- exp(6.9176))
+```

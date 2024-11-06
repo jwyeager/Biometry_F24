@@ -60,7 +60,7 @@ is not likely and a linear model would be more appropriate.
     stoichiometric quantity needed for the dissolution of manganese (x~2~),\
     and the duration of leaching in minutes (x~3~) is given as:
 
-y = 56.145 − 9.046x~1~ − 33.421x~2~ + 0.243x~3~ − 0.5963x~1~x~2~ − 0.0394x~1~x~3~ + 0.6022x~2~x~3~ + 0.6901x~1~^2^ + 11.7244x~2~^2^ − 0.0097x~3~^2^
+y = 56.145 - 9.046x~1~ - 33.421x~2~ + 0.243x~3~ - 0.5963x~1~x~2~ - 0.0394x~1~x~3~ + 0.6022x~2~x~3~ + 0.6901x~1~^2^ + 11.7244x~2~^2^ - 0.0097x~3~^2^
 
 There were a total of n = 27 observations, with SSE = 209.55 and SST = 6777.5.
 
@@ -205,7 +205,7 @@ Model A is likely the best as it has the highest R^2^ value.
 4.  Refer to Exercise 10 in Section 7.4.
 
     a.  Divide the data into two groups: points where R~1~ \< 4 in one group,\
-        points where R~1~ ≥ 4 in the other. Compute the least-squares line for predicting\
+        points where R~1~ ->= 4 in the other. Compute the least-squares line for predicting\
         R~2~ from R~1~ for each group.
 
     ```{r 8.2.5a}
